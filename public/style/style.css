@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*{
+    font-family: 'Inter', sans-serif;
+    transition: 1.2;
+}
+
+
+
+.navbar{
+    background-color: #128612;
+}
+
+.logo-warp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    width: 60px;
+}
+
+
+.logo-warp img{
+    width: 55px;
+    height: 55px;
+}
+
+.navar-brand-warp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.brand-name h1{
+    font-size: 16px;
+    color: white;
+    margin: 0;
+}
+
+.brand-name p{
+    font-size: 12px;
+    color: white;
+    margin: 0;
+}
+
+
+.nav-link{
+    color: white !important;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 20px;
+    cursor: pointer;
+
+}
+
+.nav-link:hover{
+   scale: 1.1;
+   transition: 0.5s;
+}
+
+
+.user{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding-right: 50px;
+    cursor: pointer;
+}
+
+.user-icon-warp{
+    border-radius: 100%;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-icon-warp i{
+    font-size: 25px;
+    color: #128612;
+}
+
+.user-name{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-name p{
+    margin: 0;
+    color: white;
+    font-size: 12px;
+}
+
+.user-name a{
+    margin: 0px  5px ;
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+    
+}
+
+.user-name a:hover{
+    scale: 1.1;
+    transition: 0.5s;
+    color: white;
+}
+
+.user-edit{
+    display: flex;
+}
+
+.isi{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 70px;
+    border-bottom: 3px solid #128612;
+    width: 400px;
+}
+
+.title h1{
+    font-size: 40px;
+    font-weight: bold;
+    color: #3C4043;
+}
+
+.input-section{
+    margin-top: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+}
+
+label{
+    color: #3C4043;
+    font-size: 14px;
+}
+
+.input-section input[type="date"]{
+    height: 30px;
+    border: 1px solid #128612;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C4043;
+    outline: none;
+    margin-right: 20px;
+}
+
+.input-section input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    transform: scale(1.5);
+    padding-right: 10px;
+}
+
+.input-section button{
+    background-color: white;
+    outline: none;
+    border: 1px solid #128612;
+    border-radius: 5px;
+    height: 30px;
+    color: #3C4043;
+    font-size: 14px;
+}
+
+
+.input-section button:hover{
+    background-color: #128612;
+    transition: 0.5s;
+    color: white;
+}
+
+
+
+
+.input-section input[type="text"]{
+    height: 30px;
+    border: 1px solid #128612;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C4043;
+    outline: none;
+    margin-right: 10px;
+}
+
+.tabel-warp{
+    width: 100%;
+    padding: 10px;
+}
+
+.content-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 14px;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.content-table thead tr{
+    background-color: #128612;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.content-table th, .content-table td{
+    padding: 12px 15px;
+    
+}
+
+.content-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+} 
+
+
+.content-table .tabel-genap{
+    background-color: #f3f3f3;
+    
+}
+
+.content-table tbody tr:last-of-type{
+    border-bottom: 2px solid #128612;
+}
+
+.download-icon{
+    font-size: 20px;
+    color: #128612;
+    margin-left: 10px;
+}
+
+.export-button{
+    background-color: white;
+    outline: none;
+    border: 1px solid #128612;
+    border-radius: 5px;
+    height: 30px;
+    color: #3C4043;
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+
+.export-button:hover{
+    background-color: #128612;
+    transition: 0.5s;
+    color: white;
+}
+
+.export-button:hover .download-icon{
+    color: white;
+    transition: 0.5s;
+}
