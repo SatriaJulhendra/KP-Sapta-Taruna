@@ -60,18 +60,12 @@
       </div>
     </div>
   </nav>
-
   <div class="container isi">
     <div class="title">
-        <h1>Rekap Data Pasien</h1>
+        <h1>Rekap Data Karyawan</h1>
     </div>
 
     <div class="input-section">
-      <div class="input-filter-tanggal">
-        <label for="">Mulai</label> <input type="date" id="tanggal-mulai"> 
-        <label for="">Sampai</label> <input type="date" id="hingga-tanggal">
-        <button id="Search-by-date">Search</button>
-      </div>
 
       <div class="input-search ms-auto">
         <input type="text" placeholder="Cari Nama Pasien" id="carinama">
@@ -87,41 +81,41 @@
       <table class="content-table">
         <thead>
           <tr>
+            <th>Departemen</th>
             <th>Nama</th>
+            <th>Jenis Kelamin</th>
             <th>NIK</th>
-            <th>NO.RM</th>
-            <th>Tanggal Lahir</th>
-            <th>NO.TLP</th>
-            <th>Tanggal Berkunjung</th>
+            <th>NIP/NRP</th>
+            <th>Jabatan</th>
           </tr>
         </thead>
         <tbody>
           <tr class="tabel-ganjil">
-            <td>EULIS MAESAROH</td>
-            <td class="text-center">3205024210830001</td>
-            <td class="text-center">0001.4899</td>
-            <td class="text-center">02/10/1983</td>
-            <td class="text-center">089524283951</td>
-            <td class="text-center">19/10/2023</td>
+            <td>Kepala Puskesmas</td>
+            <td>Ns. YUHENDRI, S. Kep</td>
+            <td>Laki Laki</td>
+            <td class="text-center">1401171001890004</td>
+            <td class="text-center">198901102011021001</td>
+            <td>Kepala Puskesmas</td>
           </tr>
           <tr class="tabel-genap">
-            <td >EULIS MAESAROH</td>
-            <td class="text-center">3205024210830001</td>
-            <td class="text-center">0001.4899</td>
-            <td class="text-center">02/10/1983</td>
-            <td class="text-center">089524283951</td>
-            <td class="text-center">19/10/2023</td>
+            <td >Plt. Kepala Tata Usaha</td>
+            <td>ROSMEINAR E S, Amd Keb</td>
+            <td>Perempuan</td>
+            <td class="text-center">1471016005800021</td>
+            <td class="text-center">198005202008032002</td>
+            <td>Plt. Kepala Tata Usaha </td>
           </tr>
         </tbody>
       </table>
     </div>
     
     <div class="button-bawah d-flex justify-content-between">
-      <button class="tambahDataPasien text-start" onclick="window.location.href = 'tambahdatapasien.html' ">Tambah Data Pasien</button>
-      <button class="export-button ms-auto">export<i class="fa-solid fa-download download-icon"><a href="https://docs.google.com/spreadsheets/d/1dzdjVPpRbO6rCo1XPzUMlhP18EM1CyK_VhaS7_lZxcM/export?usp=sharing"></a></i></button>
+      <button class="tambahDataPasien text-start"  onclick="window.location.href = 'tambahdatakaryawan.html' ">Tambah Data Karyawan</button>
+    <button class="export-button ms-auto">export<i class="fa-solid fa-download download-icon"><a href="https://docs.google.com/spreadsheets/d/1dzdjVPpRbO6rCo1XPzUMlhP18EM1CyK_VhaS7_lZxcM/export?usp=sharing"></a></i></button>
     </div>
   </div>
 
-  <script type="module" src="Script/script.js"></script>
+  <script type="module" src="Script/datakaryawan.js"></script>
 </body>
-</html>
+</html> 

@@ -7,8 +7,10 @@
 
 
 
+
 .navbar{
     background-color: #128612;
+    overflow: hidden;
 }
 
 .logo-warp{
@@ -64,6 +66,7 @@
    scale: 1.1;
    transition: 0.5s;
 }
+
 
 
 .user{
@@ -137,7 +140,7 @@
     align-items: center;
     margin-top: 70px;
     border-bottom: 3px solid #128612;
-    width: 400px;
+    width: 500px;
 }
 
 .title h1{
@@ -214,13 +217,17 @@ label{
     padding: 10px;
 }
 
+
+
 .content-table{
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 14px;
     min-width: 400px;
+    max-height: 800px;
     border-radius: 5px 5px 0 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     width: 100%;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
     cursor: pointer;
@@ -263,10 +270,10 @@ label{
     outline: none;
     border: 1px solid #128612;
     border-radius: 5px;
-    height: 30px;
     color: #3C4043;
     font-size: 16px;
-    margin-left: 30px;
+    margin-right: 10px;
+    padding: 5px 10px;
 }
 
 
@@ -276,7 +283,32 @@ label{
     color: white;
 }
 
+
+.tambahDataPasien{
+    background-color: white;
+    outline: none;
+    border: 1px solid #128612;
+    border-radius: 5px;
+    color: #3C4043;
+    font-size: 16px;
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+
+.tambahDataPasien:hover{
+    background-color: #128612;
+    transition: 0.5s;
+    color: white;
+}
+
+
 .export-button:hover .download-icon{
     color: white;
     transition: 0.5s;
+}
+
+
+.button-bawah {
+    width: 100%;
 }
