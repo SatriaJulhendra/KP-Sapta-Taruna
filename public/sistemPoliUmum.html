@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+    <title>Sistem Poli Umum</title>
+    <link rel="shortcut icon" href="https://firebasestorage.googleapis.com/v0/b/tugas-akhir-kp.appspot.com/o/logo%20pusesmas.png?alt=media&token=538e6489-a997-4ede-a6ed-68c88bcae138&_gl=1*b2874e*_ga*MTQ3MDYwMDM0OS4xNjk3NzU0Nzc2*_ga_CW55HF8NVT*MTY5OTAyMjQ2Ny4xNS4xLjE2OTkwMjUyODAuMTYuMC4w" type="image/x-icon">
+    <link rel="stylesheet" href="sistemPoli.css">
+</head>
+<body>
+    <nav>
+        <div class="navigasi">
+            <a href="index.html"><img src="asset/logo-puskesmas.png" alt="" class="pkm-logo"></a>
+            <div class="navigasi-items">
+                <img src="asset/profil-icon.png" alt="">
+                <p>Poli Umum</p>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div class="poli">
+            <div class="poli-items">
+                <h1>Poli</h1>
+                <div class="underline"><p></p></div>
+            </div>
+            <div class="daftar">
+                <div class="daftar-pasien">
+                    <h1>Semua Pasien</h1>
+                </div>
+                <div id="tabel-container">
+                  <script>
+                    const app = firebase.initializeApp({
+                        apiKey: "AIzaSyAPNUyW3s59eL_VJ-ZsdBGhK4bSPfeFj68",
+                        authDomain: "pkm-poli.firebaseapp.com",
+                        projectId: "pkm-poli",
+                        storageBucket: "pkm-poli.appspot.com",
+                        messagingSenderId: "923270174053",
+                        appId: "1:923270174053:web:94757b3a1feecb304abd8c",
+                        measurementId: "G-MT3J72X28P"
+                    });
+                
+                    const db = app.firestore();
+                
+                    const container = document.getElementById('tabel-container');
+                
+                    // Tambahkan variabel global untuk mengingat mode edit
+                    let isEditMode = false;
+                    let currentDocId = null; // ID dokumen yang sedang diedit
+                
+                    // Fungsi untuk masuk ke mode edit
+                    function enterEditMode(docId) {
+                        isEditMode = true;
+                        currentDocId = docId;
+                        // Nonaktifkan input yang tidak perlu diedit
+                        document.getElementById('namaPasien').disabled = true;
+                        document.getElementById('tempatLahir').disabled = true;
+                        document.getElementById('jenisKelamin').disabled = true;
+                        document.getElementById('riwayatPenyakit').disabled = true;
+                        document.getElementById('keluhan').disabled = true;
+                        // Tampilkan textarea untuk diagnosa dan resep
+                        document.getElementById('textareaDiagnosa').style.display = 'block';
+                        document.getElementById('textareaResep').style.display = 'block';
+                        // Tampilkan tombol "Kirim"
+                        document.getElementById('kirimButton').style.display = 'block';
+                    }
+                
+                    // Fungsi untuk keluar dari mode edit
+                    function exitEditMode() {
+                        isEditMode = false;
+                        currentDocId = null;
+                        // Aktifkan kembali input yang dinonaktifkan
+                        document.getElementById('namaPasien').disabled = false;
+                        document.getElementById('tempatLahir').disabled = false;
+                        document.getElementById('jenisKelamin').disabled = false;
+                        document.getElementById('riwayatPenyakit').disabled = true;
+                        document.getElementById('keluhan').disabled = true;
+                        // Sembunyikan textarea diagnosa dan resep
+                        document.getElementById('textareaDiagnosa').style.display = 'none';
+                        document.getElementById('textareaResep').style.display = 'none';
+                        // Sembunyikan tombol "Kirim"
+                        document.getElementById('kirimButton').style.display = 'none';
+                    }
+                
+                    // Fungsi untuk menyimpan perubahan ke Firebase Firestore
+                    async function saveChanges() {
+                        const diagnosa = document.getElementById('textareaDiagnosa').value;
+                        const resep = document.getElementById('textareaResep').value;
+                        
+                        if (currentDocId && diagnosa && resep) {
+                            // Simpan diagnosa dan resep ke dokumen Firebase
+                            await db.collection('Pasien Umum').doc(currentDocId).update({
+                                Diagnosa: diagnosa,
+                                Resep: resep
+                            });
+
+                            // Hapus elemen HTML terkait
+                            const table = document.querySelector(`[data-doc-id="${currentDocId}"]`);
+                            if (table) {
+                                table.remove();
+                            }
+
+                            // Hapus dokumen dari Firebase Firestore
+                            await db.collection('Pasien Umum').doc(currentDocId).delete();
+
+                            alert('Perubahan berhasil disimpan dan dikirim ke Apotek!');
+                            // Keluar dari mode edit
+                            exitEditMode();
+                        } else {
+                            alert('Silakan isi diagnosa dan resep sebelum menyimpan perubahan.');
+                        }
+                    }
+                    
+                    db.collection('Pasien Umum').onSnapshot((snapshot) => {
+                        snapshot.forEach((doc) => {
+                            const data = doc.data();
+                
+                            // Create a new table for each data
+                            const table = document.createElement('table');
+                            table.innerHTML = `
+                                <tr>
+                                    <th>Nama Pasien:</th>
+                                    <td class="detail-field"><span id="namaPasien">${data["Nama Pasien"]}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Tempat, Tanggal Lahir:</th>
+                                    <td class="detail-field"><span id="tempatLahir">${data["Tempat, Tanggal Lahir"]}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kelamin:</th>
+                                    <td class="detail-field"><span id="jenisKelamin">${data["Jenis Kelamin"]}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Riwayat Penyakit:</th>
+                                    <td class="detail-field"><span id="riwayatPenyakit">${data["Riwayat Penyakit"]}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Keluhan Saat Ini:</th>
+                                    <td class="detail-field"><span id="keluhan">${data["Keluhan saat ini"]}</span></td>
+                                </tr>
+                                <tr>
+                                <th>Diagnosa:</th>
+                                    <td class="detail-field"><textarea id="textareaDiagnosa" ${isEditMode ? "style='display: block;'" : "style='display: none;'"}>${data["Diagnosa"] ? data["Diagnosa"] : ''}</textarea></td>
+                                </tr>
+                                <tr>
+                                <th>Resep:</th>
+                                    <td class="detail-field"><textarea id="textareaResep" ${isEditMode ? "style='display: block;'" : "style='display: none;'"}> ${data["Resep"] ? data["Resep"] : ''}</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td class="detail-field">
+                                        <button id="kirimButton" style="${isEditMode ? 'display: block;' : 'display: none;'}" onclick="saveChanges()">Kirim</button>
+                                    </td>
+                                </tr>
+                            `;
+                
+                            // Append the new table to the container
+                            container.appendChild(table);
+                
+                            // Menambahkan event listener untuk mengaktifkan mode edit
+                            table.addEventListener('click', () => {
+                                if (!isEditMode) {
+                                    enterEditMode(doc.id);
+                                }
+                            });
+                        });
+                      });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
