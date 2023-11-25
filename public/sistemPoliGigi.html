@@ -121,31 +121,38 @@
                                 const table = document.createElement('table');
                                 table.innerHTML = `
                                     <tr>
-                                        <th>Nama Pasien:</th>
+                                        <th>Nama Pasien</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><span id="namaPasien">${data["Nama Pasien"]}</span></td>
                                     </tr>
                                     <tr>
-                                        <th>Tempat, Tanggal Lahir:</th>
+                                        <th>Tempat, Tanggal Lahir</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><span id="tempatLahir">${data["Tempat, Tanggal Lahir"]}</span></td>
                                     </tr>
                                     <tr>
-                                        <th>Jenis Kelamin:</th>
+                                        <th>Jenis Kelamin</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><span id="jenisKelamin">${data["Jenis Kelamin"]}</span></td>
                                     </tr>
                                     <tr>
-                                        <th>Riwayat Penyakit:</th>
+                                        <th>Riwayat Penyakit</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><span id="riwayatPenyakit">${data["Riwayat Penyakit"]}</span></td>
                                     </tr>
                                     <tr>
-                                        <th>Keluhan Saat Ini:</th>
+                                        <th>Keluhan Saat Ini</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><span id="keluhan">${data["Keluhan saat ini"]}</span></td>
                                     </tr>
                                     <tr>
-                                    <th>Diagnosa:</th>
+                                        <th>Diagnosa</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><textarea id="textareaDiagnosa" ${isEditMode ? "style='display: block;'" : "style='display: none;'"}>${data["Diagnosa"] ? data["Diagnosa"] : ''}</textarea></td>
                                     </tr>
                                     <tr>
-                                    <th>Resep:</th>
+                                        <th>Resep</th>
+                                        <td class="col-titik-dua">:</td>
                                         <td class="detail-field"><textarea id="textareaResep" ${isEditMode ? "style='display: block;'" : "style='display: none;'"}> ${data["Resep"] ? data["Resep"] : ''}</textarea></td>
                                     </tr>
                                     <tr>

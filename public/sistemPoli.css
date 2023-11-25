@@ -93,7 +93,7 @@ table tr th{
     font-weight: 600;
     text-align: left;
     padding: 5px;
-    width: 250px;
+    width: 200px;
 }
 
 #textareaDiagnosa, #textareaResep{
@@ -128,6 +128,11 @@ textarea{
 }
 
 .detail-field{
+    text-align: left;
+}
+
+.col-titik-dua{
+    width: 8%;
     text-align: left;
 }
 
