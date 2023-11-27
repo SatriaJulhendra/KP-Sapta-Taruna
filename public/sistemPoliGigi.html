@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="sistemPoli.css">
 </head>
 <body>
+    <!-- navigasi bar -->
     <nav>
         <div class="navigasi">
             <a href="index.html"><img src="asset/logo-puskesmas.png" alt="" class="pkm-logo"></a>
@@ -20,6 +21,7 @@
         </div>
     </nav>
 
+    <!-- body isi halaman poli -->
     <section>
         <div class="poli">
             <div class="poli-items">
@@ -30,6 +32,7 @@
                 <div class="daftar-pasien">
                     <h1>Semua Pasien</h1>
                 </div>
+                <!-- javascript untuk input dan output data dari database -->
                 <div id="tabel-container">
                     <script>
                         const app = firebase.initializeApp({
@@ -46,7 +49,7 @@
                     
                         const container = document.getElementById('tabel-container');
                     
-                        // Tambahkan variabel global untuk mengingat mode edit
+                        // Variabel global untuk mode edit
                         let isEditMode = false;
                         let currentDocId = null; // ID dokumen yang sedang diedit
                     
@@ -60,7 +63,7 @@
                             document.getElementById('jenisKelamin').disabled = true;
                             document.getElementById('riwayatPenyakit').disabled = true;
                             document.getElementById('keluhan').disabled = true;
-                            // Tampilkan textarea untuk diagnosa, resep, dan saran
+                            // Tampilkan textarea dan input
                             document.getElementById('textareaDiagnosa').style.display = 'block';
                             document.getElementById('textareaResep').style.display = 'block';
                             document.getElementById('textareaSaran').style.display = 'block';
@@ -81,7 +84,7 @@
                             document.getElementById('jenisKelamin').disabled = false;
                             document.getElementById('riwayatPenyakit').disabled = true;
                             document.getElementById('keluhan').disabled = true;
-                            // Sembunyikan textarea diagnosa, resep, dan saran
+                            // Sembunyikan textarea dan input
                             document.getElementById('textareaDiagnosa').style.display = 'none';
                             document.getElementById('textareaResep').style.display = 'none';
                             document.getElementById('textareaSaran').style.display = 'none';
@@ -98,34 +101,41 @@
                             const resep = document.getElementById('textareaResep').value;
                             const saran = document.getElementById('textareaSaran').value;
 
-                            // Validasi textarea hanya mengandung huruf (minimal satu huruf)
+                            // Validasi textarea harus mengandung huruf
                             const hurufRegex = /[a-zA-Z]/;
                             if (
                                 currentDocId &&
-                                (hurufRegex.test(diagnosa) || hurufRegex.test(resep)) &&
+                                (hurufRegex.test(diagnosa) && hurufRegex.test(resep)) &&
                                 validateRujukan()
                             ) {
-                                // Simpan diagnosa dan resep ke dokumen Firebase
-                                await db.collection('Pasien Gigi').doc(currentDocId).update({
-                                    Diagnosa: diagnosa,
-                                    Resep: resep,
-                                    Saran: saran,
-                                });
+                                // alert konfirmasi pengiriman data
+                                const userConfirmed = confirm("Apakah Anda yakin ingin mengirimkan data?\n\n(Data yang sudah dikirim tidak bisa dikembalikan lagi)");
 
-                                // Hapus elemen HTML terkait
-                                const table = document.querySelector(`[data-doc-id="${currentDocId}"]`);
-                                if (table) {
-                                    table.remove();
+                                if (userConfirmed) {
+                                    // Simpan diagnosa, resep, dan saran ke dokumen Firebase
+                                    await db.collection('Pasien Gigi').doc(currentDocId).update({
+                                        Diagnosa: diagnosa,
+                                        Resep: resep,
+                                        Saran: saran,
+                                    });
+
+                                    // Hapus elemen HTML terkait
+                                    const table = document.querySelector(`[data-doc-id="${currentDocId}"]`);
+                                    if (table) {
+                                        table.remove();
+                                    }
+
+                                    // Hapus dokumen dari Firebase Firestore
+                                    await db.collection('Pasien Gigi').doc(currentDocId).delete();
+
+                                    alert('Perubahan berhasil disimpan dan dikirim ke Apotek!');
+                                    // Keluar dari mode edit
+                                    exitEditMode();
                                 }
-
-                                // Hapus dokumen dari Firebase Firestore
-                                await db.collection('Pasien Gigi').doc(currentDocId).delete();
-
-                                alert('Perubahan berhasil disimpan dan dikirim ke Apotek!');
-                                // Keluar dari mode edit
-                                exitEditMode();
                             } else {
                                 alert('Mohon melengkapi semua data pemeriksaan sebelum mengirim ke Apotek.');
+                                // Jika validasi gagal, keluar dari mode edit
+                                exitEditMode();
                             }
                         }
 
@@ -136,13 +146,13 @@
                             const lokasiRujukan = document.getElementById('lokasiRujukan').value;
                             const alasanRujukan = document.getElementById('alasanRujukan').value;
 
-                            // Validasi radio button
+                            // Validasi radio button harus memilih salah satu pilihan
                             if (!(radioDirujuk.checked || radioTidakDirujuk.checked)) {
                                 alert('Mohon pilih apakah perlu dirujuk atau tidak.');
                                 return false;
                             }
 
-                            // Validasi input lokasi dan alasan rujukan (jika dirujuk)
+                            // Validasi input lokasi dan alasan rujukan (jika dirujuk) harus diisi
                             if (radioDirujuk.checked && (!lokasiRujukan.trim() || !alasanRujukan.trim())) {
                                 alert('Mohon isi lokasi dan alasan rujukan jika perlu dirujuk.');
                                 return false;
@@ -160,7 +170,7 @@
                             }
                         }
 
-                        // Fungsi untuk menambahkan tanda strip pada posisi kursor
+                        // Fungsi untuk menambahkan tanda strip otomatis pada textarea
                         function insertBulletPoint() {
                             const textarea = document.activeElement;
                             const cursorPosition = textarea.selectionStart;
@@ -176,11 +186,12 @@
                             textarea.setSelectionRange(cursorPosition + 3, cursorPosition + 3);
                         }
                         
+                        // Mengakses data dari database
                         db.collection('Pasien Gigi').onSnapshot((snapshot) => {
                             snapshot.forEach((doc) => {
                                 const data = doc.data();
                     
-                                // Create a new table for each data
+                                // Membuat baris baru untuk tiap data
                                 const table = document.createElement('table');
                                 table.innerHTML = `
                                     <tr>
@@ -234,7 +245,8 @@
                                         <th></th>
                                         <td></td>
                                         <td class="detail-field" id="rujukanLokasi" ${isEditMode ? "style='display: block;'" : "style='display: none;'"}>
-                                            <label class="labelRujukan">Jika Ya, masukkan lokasi dan alasan/tujuan rujukan dilakukan</label>
+                                            <label class="labelRujukan">Jika Ya, masukkan lokasi dan alasan/tujuan rujukan dilakukan<br></label>
+                                            <label class="labelRujukan">Jika Tidak, dapat memasukkan - (strip)</label>
                                             <input type="text" id="lokasiRujukan" placeholder="Kemana pasien dirujuk?">
                                         </td>
                                     </tr>
@@ -246,9 +258,10 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Saran Dokter</th>
+                                        <th>Saran Dokter <br><span style="font-size: 10px; color: #646464;">(Optional)</span></th>
                                         <td class="col-titik-dua">:</td>
-                                        <td class="detail-field"><textarea id="textareaSaran" ${isEditMode ? "style='display: block;'" : "style='display: none;'"} onkeydown="handleKeyDown(event)">- ${data["Saran"] ? data["Saran"] : ''}</textarea></td>
+                                        <td class="detail-field">
+                                            <textarea id="textareaSaran" ${isEditMode ? "style='display: block;'" : "style='display: none;'"} onkeydown="handleKeyDown(event)">- ${data["Saran"] ? data["Saran"] : ''}</textarea></td>
                                     </tr>
                                     <tr>
                                         <th></th>
@@ -272,6 +285,7 @@
                         });
                     </script>
                 </div>
+                <!-- tombol untuk kembali ke halaman home -->
                 <div class="kembali-button">
                     <a href="index.html" id="kembaliButton" style="text-decoration: none;">Kembali</a>
                 </div>
